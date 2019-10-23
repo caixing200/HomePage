@@ -1,0 +1,222 @@
+@media only screen and (max-width: 479px) {
+    .main-header .main-box .logo-box {
+        padding: 10px 0 !important;
+        margin-bottom: 5px !important;
+    }
+    .bannerTxtView .bannerTxt1 {
+        font-size: 1.2em !important;
+        margin-bottom: 0 !important;
+    }
+    .bannerTxtView .bannerTxt2 {
+        font-size: 1em !important;
+    }
+    .footerHidden {
+        display: none;
+    }
+}
+.pc_imgBox{
+    display: block;
+    height: 300px;
+    width: 100%;
+    background-size: cover;
+    background-position:  center;
+    background-repeat: no-repeat;
+}
+.m_imgBox{
+    display: block;
+    width: 100%;
+}
+.loading-cover {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background-color: rgba(119,119,119,0.4);
+    -webkit-filter: blur(20px);
+    -moz-filter: blur(20px);
+    -ms-filter: blur(20px);
+    -o-filter: blur(20px);
+    filter: blur(20px);
+}
+.bannerTxtView {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.bannerTxtView .bannerTxtBox {
+    position: static;
+    max-width: 1200px;
+    padding: 0 15px;
+    padding-top: 3em;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+.bannerTxtView p {
+    color: #ffffff;
+}
+.bannerTxtView .bannerTxt1 {
+    font-size: 3em;
+    margin-bottom: 1em;
+}
+.bannerTxtView .bannerTxt2 {
+    font-size: 1.5em;
+}
+.market-block-four .inner-box .lower-content {
+    cursor: pointer;
+}
+.market-block-four .inner-box .lower-content h3 {
+    color: #020e28;
+}
+.market-block-four .inner-box:hover .lower-content h3 {
+    color: #ffffff;
+}
+.isHide {
+    display: none;
+}
+.product-details .product-details-content {
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+
+}
+.product-details .product-details-animate {
+    opacity: 1;
+}
+
+
+.product-details .product-details-content .product-details-content-title {
+    color: #000000;
+}
+.product-details .product-details-content .product-details-content-view-title {
+    color: #000000;
+    text-align: center;
+    margin-top: 26px;
+    margin-bottom: 12px;
+}
+.product-details .product-details-content .product-details-content-view-detail .details-content {
+    padding: 2%;
+
+}
+.product-details .product-details-content .product-details-content-view-detail .details-content li{
+    margin-bottom: 1%;
+}
+.product-details .product-details-content .product-details-content-view-detail .details-content-text {
+    color: #848484;
+    font-size: 16px;
+    padding-left: 6px;
+}
+.cellView .cellBox {
+    padding: 2%;
+    float: left;
+    width: 33.3%;
+}
+.product-details-btn-title {
+    margin-bottom: 20px;
+    color: #0b0b0b;
+}
+.product-details-btn-list .product-details-btns {
+    margin-bottom: 10px;
+}
+.product-details-btn-list .product-details-btns a{
+    color: #848484;
+    font-weight: 300;
+    font-size: 18px;
+}
+.product-details-btn-list .product-details-btns a:hover{
+    color: #f55b14;
+    font-weight: 600;
+}
+.product-details-btn-list .isCurrent a{
+    color: #f55b14;
+    font-weight: 600;
+}
+
+.details-enter {
+    transform: translateY(20px);
+}
+.details-enter, .details-leave-to {
+    opacity: 0;
+}
+.details-enter-active {
+    transition: all 0.8s ease;
+}
+
+.details-view-enter {
+    transform: translateY(20px);
+}
+.details-view-enter, .details-view-leave-to {
+    opacity: 0;
+}
+.details-view-enter-active {
+    transition: all 0.8s ease;
+}
+
+
+
+
+
+.banner-enter, .banner-leave-to {
+    opacity: 0.5;
+}
+.banner-enter-active {
+    transition: all 0.5s ease;
+}
+
+.banner-txt-enter .bannerTxtBox {
+    opacity: 0;
+    transform: translateY(-15px);
+}
+.banner-txt-to .bannerTxtBox {
+    opacity: 1;
+    transform: translateY(0);
+}
+.banner-txt-active .bannerTxtBox {
+    transition: all 1s ease;
+}
+
+.fixedFooter {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.priceView {
+    border: 5px solid rgb(16,36,63);
+}
+.priceView .priceTitle {
+    padding: 10px;
+    text-align: center;
+    font-size: 30px;
+    color: rgb(16,36,63);
+    line-height: 30px;
+}
+.priceView .priceBox {
+    background-color: rgb(16,36,63);
+    position: relative;
+}
+.priceView .priceBox .priceTxt {
+    float: left;
+    width: 50%;
+    padding: 20px 0;
+}
+.priceView .priceBox .priceTxt p {
+    text-align: center;
+    padding: 5px 0;
+    font-size: 30px;
+    color: #ffffff;
+}
+.priceView .priceBox .priceLine {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 110%;
+    transform: translate(-50%,0);
+    background-color: #fff;
+}

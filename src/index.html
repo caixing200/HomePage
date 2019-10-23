@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= webpackConfig.name %></title>
+    <!-- Responsive -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .ieCover {
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #000000;
+            filter: Alpha(opacity=90);
+            overflow: hidden;
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        var sys = getOperationSys()
+        if(sys && (sys === 'Windows' || sys === 'Mac')){
+            var browser = getBrowser()
+            var version = getIEVersion()?getIEVersion()-0:0
+            if(browser === 'IE' && version && version < 8){
+                $(function () {
+                    $('body').append(
+                        '<div class="ieCover">' +
+                        '<div style="position: relative;text-align: center;overflow: hidden;">' +
+                        '<div style="display: inline-block;margin-top: 200px;font-size:20px;width: 400px;height: 100px;color:#fff;">' +
+                        '<p>浏览器版本过低，请升级或更换浏览器！</p>' +
+                        '<div style="text-align: center">' +
+                        '<button id="ieClose" style="padding: 5px 10px;font-size: 16px;">关 闭</button><i style="display: inline-block;width: 20px;height: 15px;"></i><button id="ieDownload" style="padding: 5px 10px;font-size: 16px;">升 级</button>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                    )
+                    $(".ieCover").click(function(event){
+                        event.stopPropagation();
+                    });
+                    $(".ieCover").on('click','#ieClose',function(){
+                        window.close();
+                    });
+                    $(".ieCover").on('click','#ieDownload',function(){
+                        window.open('http://ftp.mozilla.org/pub/firefox/releases/52.0/win32/zh-CN/Firefox%20Setup%2052.0.exe');
+                    });
+                })
+            }
+        }
+
+
+
+
+
+
+        function getBrowser() {
+            var UserAgent = navigator.userAgent.toLowerCase();
+            var browser = null;
+            var browserArray = {
+                IE: window.ActiveXObject || "ActiveXObject" in window, // IE
+                Chrome: UserAgent.indexOf('chrome') > -1 && UserAgent.indexOf('safari') > -1, // Chrome浏览器
+                Firefox: UserAgent.indexOf('firefox') > -1, // 火狐浏览器
+                Opera: UserAgent.indexOf('opera') > -1, // Opera浏览器
+                Safari: UserAgent.indexOf('safari') > -1 && UserAgent.indexOf('chrome') == -1, // safari浏览器
+                Edge: UserAgent.indexOf('edge') > -1, // Edge浏览器
+                QQBrowser: /qqbrowser/.test(UserAgent), // qq浏览器
+                WeixinBrowser: /MicroMessenger/i.test(UserAgent) // 微信浏览器
+            };
+            for (var i in browserArray) {
+                if (browserArray[i]) {
+                    browser = i;
+                }
+            }
+            return browser;
+        }
+        function getIEVersion() {
+            var UserAgent = navigator.userAgent.toLowerCase();
+            var re = new RegExp("msie ([0-9]{1,})");
+            var re11 = new RegExp("rv\:([0-9]{1,})");
+            var ver = null;
+            if (re.exec(UserAgent) != null) {
+                console.log(RegExp.$1);
+                ver = RegExp.$1;
+            } else { // IE11
+                if(re11.exec(UserAgent) != null) {
+                    console.log(RegExp.$1);
+                    ver = RegExp.$1;
+                }
+            }
+            return ver;
+        }
+        function getOperationSys() {
+            var OS = '';
+            var OSArray = {};
+            var UserAgent = navigator.userAgent.toLowerCase();
+            OSArray.Windows = (navigator.platform == 'Win32') || (navigator.platform == 'Windows');
+            OSArray.Mac = (navigator.platform == 'Mac68K') || (navigator.platform == 'MacPPC')
+                || (navigator.platform == 'Macintosh') || (navigator.platform == 'MacIntel');
+            OSArray.iphone = UserAgent.indexOf('iPhone') > -1;
+            OSArray.ipod = UserAgent.indexOf('iPod') > -1;
+            OSArray.ipad = UserAgent.indexOf('iPad') > -1;
+            OSArray.Android = UserAgent.indexOf('Android') > -1;
+            for (var i in OSArray) {
+                if (OSArray[i]) {
+                    OS = i;
+                }
+            }
+            return OS;
+        }
+    </script>
+</head>
+<body>
+<div id="app"></div>
+<div class="scroll-to-top scroll-to-target" data-target="html"><span class="icon fa fa-angle-double-up"></span></div>
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
