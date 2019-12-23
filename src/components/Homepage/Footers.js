@@ -145,7 +145,7 @@ export default class Footers extends Component{
                                 <p style={{float:'left',height:'20px',lineHeight:'20px',margin: 0}}>顶智智能技术有限公司</p>
                             </div>
                             <div style={{display: 'inline-block',margin: '0 20px'}}>
-                                <p style={{float:'left',height:'20px',lineHeight:'20px',margin: 0, color:'#939393'}}>浙ICP备17012753号-1</p>
+                                <a target="_blank" href="http://www.beian.miit.gov.cn/" style={{display:'inline-block',textDecoration:'none',height:'20px',lineHeight:'20px'}}><p style={{float:'left',height:'20px',lineHeight:'20px',margin: 0, color:'#939393'}}>浙ICP备17012753号-1</p></a>
                             </div>
                             <div style={{display: 'inline-block'}}>
                                 <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33030402000643" style={{display:'inline-block',textDecoration:'none',height:'20px',lineHeight:'20px'}}><img src={this.props.gonganImg} style={{float:'left'}}/><p style={{float:'left',height:'20px',lineHeight:'20px',margin: '0px 0px 0px 5px', color:'#939393'}}>浙公网安备 33030402000643号</p></a>
