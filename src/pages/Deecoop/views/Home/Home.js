@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import {withRouter } from 'react-router';
 import {navindex, navstate} from '@/redux/actions/navIndex';
 
 import Banner from '@/components/Banner/Banner'
@@ -49,7 +50,8 @@ class Home extends Component {
                     txt3: '设备状态监控及分析',
                 },
             ]
-        }
+        };
+        this.qrcodeHtml = `<div class="qrcode"></div>`
     }
 
     navbar(index) {
@@ -59,7 +61,14 @@ class Home extends Component {
         this.props.navindex(this.props.location.pathname)
         $(function () {
             $(".scroll-to-target").click()
+            $('[data-toggle="popover"]').popover()
+            $(window).scroll(_=>{
+                $('[data-toggle="popover"]').popover('hide')
+            })
         })
+    }
+    goLogin(){
+        this.props.history.push('/price/register');
     }
 
     render() {
@@ -183,6 +192,69 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
+                <div className="leftNar">
+                    <div style={{height:'100%',position: 'relative'}}>
+                        <div className="leftNarBtn" onClick={event => this.goLogin(event)}>
+                            <div className="leftNarBtnTxt">
+                                <div>申请</div>
+                                <div>试用</div>
+                            </div>
+                        </div>
+                        <div className="leftNarBtn"
+                             data-trigger="hover"
+                             data-container="body"
+                             data-toggle="popover"
+                             data-placement="left"
+                             data-content="189-8979-2655">
+                            <div className="leftNarBtnTxt">
+                                <div>咨询</div>
+                                <div>电话</div>
+                            </div>
+                        </div>
+                        <div className="leftNarBtn"
+                             data-trigger="hover"
+                             data-html="true"
+                             data-container="body"
+                             data-toggle="popover"
+                             data-placement="left"
+                             data-content={this.qrcodeHtml}>
+                            <div className="leftNarBtnTxt">
+                                <div>微信</div>
+                                <div>咨询</div>
+                            </div>
+                        </div>
+                        <div className="leftNarBorder1"></div>
+                        <div className="leftNarBorder2"></div>
+                    </div>
+                </div>
+                <div className="footerNar hidden-xs">
+                    <div style={{height:'100%',position: 'relative'}}>
+                        <div className="footerNarBtn">
+                            <div className="footerNarBtnTxt">
+                                <span className="glyphicon glyphicon-earphone marginR"></span>
+                                <span>189-8979-2655</span>
+                            </div>
+                        </div>
+                        <div className="footerNarBtn">
+                            <div className="footerNarBtnTxt"
+                                 data-trigger="hover"
+                                 data-html="true"
+                                 data-container="body"
+                                 data-toggle="popover"
+                                 data-placement="top"
+                                 data-content={this.qrcodeHtml}>
+                                <span className="weixin marginR"></span>
+                                <span>微信咨询</span>
+                            </div>
+                        </div>
+                        <div className="footerNarBtn">
+                            <div className="footerNarBtnTxt"  onClick={event => this.goLogin(event)}>
+                                <span className="glyphicon glyphicon-plus-sign marginR"></span>
+                                <span>申请试用</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -198,4 +270,4 @@ const mapDispatchToProps = {
     navindex, navstate
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

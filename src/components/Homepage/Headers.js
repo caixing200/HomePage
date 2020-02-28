@@ -14,6 +14,9 @@ class Header extends Component{
         if(!pathStr) return '/'
         return '/' + pathStr.split('/')[1]
     }
+    goSaas(){
+        window.open('http://web.deecoop.cn')
+    }
     render(){
         return (
             <div className="main-header">
@@ -39,15 +42,15 @@ class Header extends Component{
                                         <ul className="navigation clearfix">
                                             <li className={`${this.getBasePath(this.props.navIndex._path) == '/'?'current':''}`}><Link to="/">首页</Link></li>
                                             <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/product'?'current':''}`}>
-                                                <Link to="/product">产品中心</Link>
+                                                <Link to="/product">产品</Link>
                                                 <ul>
+                                                    <li><Link to="/product/operation">标准版SaaS企业管理系统</Link></li>
                                                     <li><Link to="/product/erp">ERP及定制</Link></li>
                                                     <li><Link to="/product/mes">MES制造执行系统及定制</Link></li>
                                                     <li><Link to="/product/wms">WMS仓库管理系统及定制</Link></li>
                                                     <li><Link to="/product/dnc">DNC机床联网管理</Link></li>
                                                     <li><Link to="/product/deviceData">设备数据采集与分析</Link></li>
                                                     <li><Link to="/product/deviceManagement">设备管理云平台</Link></li>
-                                                    <li><Link to="/product/operation">企业运营管理云平台</Link></li>
                                                 </ul>
                                             </li>
                                             <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/solution'?'current':''}`}><Link to="/solution">解决方案</Link>
@@ -57,7 +60,7 @@ class Header extends Component{
                                                     <li><Link to="/solution/tobacco">烟草行业解决方案</Link></li>
                                                 </ul>
                                             </li>
-                                            <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/case'?'current':''}`}><Link to="/case">客户案例</Link>
+                                            <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/case'?'current':''}`}><Link to="/case">案例</Link>
                                                 <ul>
                                                     <li><Link to="/case/coperation">企业运营管理工业云平台</Link></li>
                                                     <li><Link to="/case/monitoring">企业设备监控工业云平台</Link></li>
@@ -66,7 +69,13 @@ class Header extends Component{
                                                     <li><Link to="/case/cwms">WMS仓库管理系统</Link></li>
                                                 </ul>
                                             </li>
-                                            <li className={`${this.getBasePath(this.props.navIndex._path) == '/price'?'current':''}`}><Link to="/price">价格</Link></li>
+                                            <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/price'?'current':''}`}><Link to="/price">价格与注册</Link>
+                                                <ul>
+                                                    <li><Link to="/price/prices">标准版企业管理系统</Link></li>
+                                                    <li><Link to="/price/custom">定制企业信息化系统</Link></li>
+                                                    <li><Link to="/price/register">申请试用</Link></li>
+                                                </ul>
+                                            </li>
                                             <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/about'?'current':''}`}><Link to="/about">关于我们</Link>
                                                 <ul>
                                                     <li><Link to="/about/enterprise">企业简介</Link></li>
@@ -74,6 +83,7 @@ class Header extends Component{
                                                     <li><Link to="/about/serve">服务支持</Link></li>
                                                 </ul>
                                             </li>
+                                            <li onClick={event => this.goSaas(event)}><Link to={`${this.getBasePath(this.props.navIndex._path)}`}>登录</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -110,15 +120,15 @@ class Header extends Component{
                                         <ul className="navigation clearfix">
                                             <li className={`${this.getBasePath(this.props.navIndex._path) == '/'?'current':''}`}><Link to="/">首页</Link></li>
                                             <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/product'?'current':''}`}>
-                                                <Link to="/product">产品中心</Link>
+                                                <Link to="/product">产品</Link>
                                                 <ul>
+                                                    <li><Link to="/product/operation">标准版SaaS企业管理系统</Link></li>
                                                     <li><Link to="/product/erp">ERP及定制</Link></li>
                                                     <li><Link to="/product/mes">MES制造执行系统及定制</Link></li>
                                                     <li><Link to="/product/wms">WMS仓库管理系统及定制</Link></li>
                                                     <li><Link to="/product/dnc">DNC机床联网管理</Link></li>
                                                     <li><Link to="/product/deviceData">设备数据采集与分析</Link></li>
                                                     <li><Link to="/product/deviceManagement">设备管理云平台</Link></li>
-                                                    <li><Link to="/product/operation">企业运营管理云平台</Link></li>
                                                 </ul>
                                             </li>
                                             <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/solution'?'current':''}`}><Link to="/solution">解决方案</Link>
@@ -128,7 +138,7 @@ class Header extends Component{
                                                     <li><Link to="/solution/tobacco">烟草行业解决方案</Link></li>
                                                 </ul>
                                             </li>
-                                            <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/case'?'current':''}`}><Link to="/case">客户案例</Link>
+                                            <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/case'?'current':''}`}><Link to="/case">案例</Link>
                                                 <ul>
                                                     <li><Link to="/case/coperation">企业运营管理工业云平台</Link></li>
                                                     <li><Link to="/case/monitoring">企业设备监控工业云平台</Link></li>
@@ -137,7 +147,13 @@ class Header extends Component{
                                                     <li><Link to="/case/cwms">WMS仓库管理系统</Link></li>
                                                 </ul>
                                             </li>
-                                            <li className={`${this.getBasePath(this.props.navIndex._path) == '/price'?'current':''}`}><Link to="/price">价格</Link></li>
+                                            <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/price'?'current':''}`}><Link to="/price">价格与注册</Link>
+                                                <ul>
+                                                    <li><Link to="/price/prices">标准版企业管理系统</Link></li>
+                                                    <li><Link to="/price/custom">定制企业信息化系统</Link></li>
+                                                    <li><Link to="/price/register">申请试用</Link></li>
+                                                </ul>
+                                            </li>
                                             <li className={`dropdown ${this.getBasePath(this.props.navIndex._path) == '/about'?'current':''}`}><Link to="/about">关于我们</Link>
                                                 <ul>
                                                     <li><Link to="/about/enterprise">企业简介</Link></li>
@@ -145,6 +161,7 @@ class Header extends Component{
                                                     <li><Link to="/about/serve">服务支持</Link></li>
                                                 </ul>
                                             </li>
+                                            <li onClick={event => this.goSaas(event)}><Link to={`${this.getBasePath(this.props.navIndex._path)}`}>登录</Link></li>
                                         </ul>
                                     </div>
                                 </div>

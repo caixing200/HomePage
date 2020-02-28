@@ -31,14 +31,14 @@ class Product extends Component {
         return (
             <div id="productView">
                 <Switch>
+                    <Route path={`${this.props.match.path}/operation`} component={Lazyload(Operation)}/>
                     <Route path={`${this.props.match.path}/erp`} component={Lazyload(Erp)}/>
                     <Route path={`${this.props.match.path}/mes`} component={Lazyload(Mes)}/>
                     <Route path={`${this.props.match.path}/wms`} component={Lazyload(Wms)}/>
                     <Route path={`${this.props.match.path}/dnc`} component={Lazyload(Dnc)}/>
                     <Route path={`${this.props.match.path}/deviceData`} component={Lazyload(Devicedata)}/>
                     <Route path={`${this.props.match.path}/deviceManagement`} component={Lazyload(Devicemanagement)}/>
-                    <Route path={`${this.props.match.path}/operation`} component={Lazyload(Operation)}/>
-                    <Route component={Lazyload(Erp)}/>
+                    <Route component={Lazyload(Operation)}/>
                 </Switch>
                 <div className="product-details">
                     <div className="services-section-three" style={{paddingTop: '40px'}}>

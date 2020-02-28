@@ -196,16 +196,58 @@
     color: rgb(16,36,63);
     line-height: 30px;
 }
+.priceView .priceTitle1 {
+    font-size: 24px;
+
+}
 .priceView .priceBox {
     background-color: rgb(16,36,63);
     position: relative;
+    overflow: hidden;
 }
+
 .priceView .priceBox .priceTxt {
     float: left;
     width: 50%;
     padding: 20px 0;
 }
 .priceView .priceBox .priceTxt p {
+    text-align: center;
+    padding: 5px 0;
+    font-size: 30px;
+    color: #ffffff;
+}
+.priceSaasTxt {
+    height: 100%;
+    float: left;
+    width: 20%;
+    padding: 20px 0;
+    position: relative;
+
+}
+.priceSaasTxt1 {
+    height: 100%;
+    padding: 20px 0;
+    position: relative;
+}
+.priceSaasTxt .priceSaasLine {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 200%;
+    transform: translate(-50%,0);
+    background-color: #fff;
+}
+.priceSaasTxt1 .priceSaasLine {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background-color: #fff;
+}
+.priceView .priceBox .priceSaasTxt p,.priceView .priceBox .priceSaasTxt1 p {
     text-align: center;
     padding: 5px 0;
     font-size: 30px;
@@ -219,4 +261,248 @@
     height: 110%;
     transform: translate(-50%,0);
     background-color: #fff;
+}
+
+.registerView {
+    font-size: 18px;
+}
+.registerTitle {
+    display: inline-block;
+    width: 90px;
+    text-align: justify;
+    text-align-last: justify;
+    position: relative;
+    font-weight: 700;
+}
+.reset-col {
+    padding-left: 0;
+}
+.registerCost {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    color: orangered;
+    border-bottom: 1px solid orangered;
+}
+.registerForm {
+    float: left;
+    font-size: 18px;
+}
+.registerLeftEmpty {
+    width: 20px;
+    height: 300px;
+    float: left;
+}
+.registerFormTitle {
+    text-align: justify;
+    text-align-last: justify;
+}
+
+.registerFormBtnView {
+    position: absolute;
+    bottom: -60px;
+    left: -75px;
+}
+.registerFormBtn {
+    width: 150px;
+    font-size: 25px;
+}
+.registerFormEmpty {
+    height: 380px;
+}
+.registerFormleftBorder {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    bottom: 100px;
+    width: 2px;
+    background-color: rgb(68,114,196);
+}
+.registerFormTopBorder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: rgb(68,114,196);
+}
+.resetRegisterFormInput {
+    cursor: pointer;
+}
+.resetRegisterFormCanvas {
+    cursor: pointer;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+}
+.register-result {
+    text-align: center;
+}
+.register-result-text {
+    text-align: center;
+    color: rgb(192,43,79);
+    font-size: 28px;
+}
+.register-ok {
+    background-image: url(../images/register_ok.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-size: 100%;
+}
+.result-tag {
+    display: inline-block;
+    padding: 0 36px;
+    font-size: 20px;
+    height: 36px;
+    line-height: 36px;
+    color: rgb(31,78,121);
+    background-color: rgb(239,151,12);
+    position: relative;
+}
+.result-tag-before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 18px solid;
+    border-color: rgb(239,151,12) rgb(239,151,12) rgb(239,151,12) #fff;
+}
+.result-tag-after {
+    position: absolute;
+    top: 0;
+    right: -18px;
+    border: 18px solid;
+    border-color: #fff #fff #fff rgb(239,151,12);
+}
+.result-view {
+    font-size: 20px;
+    text-align: center;
+
+}
+
+.register-result-btn {
+    padding: 30px 0;
+    text-align: center;
+}
+.buy-view {
+    font-size: 20px;
+}
+.reset-buy-view {
+    margin-bottom: 30px;
+}
+.buy-view p {
+    margin: 0;
+}
+@media (min-width: 768px){
+    .modal-dialog {
+        margin: 100px auto;
+    }
+}
+
+.leftNar {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    width: 80px;
+    height: 300px;
+    background-color: #041332;
+    margin-top: -150px;
+    border-radius: 10px;
+}
+.leftNarBtn {
+    height: 33.3%;
+    font-size: 25px;
+    color: #ffffff;
+    position: relative;
+    cursor: pointer;
+}
+.leftNarBtnTxt {
+    padding-top: 20px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.leftNarBtnTxt div {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+}
+.leftNarBorder1 {
+    position: absolute;
+    top: 33.3%;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background-color: #ffffff;
+}
+.leftNarBorder2 {
+    position: absolute;
+    top: 66.6%;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background-color: #ffffff;
+}
+.footerNar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+    background-color: #041332;
+}
+.footerNarBtn {
+    display: inline-block;
+    width: 33.3%;
+    height: 100%;
+    font-size: 25px;
+    color: #ffffff;
+    position: relative;
+    text-align: center;
+}
+.footerNarBtnTxt {
+    display: inline-block;
+    margin: 0;
+    padding-top: 10px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.footerNarBtnTxt span {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+}
+.weixin {
+    display: inline-block;
+    background-image: url(../images/weixin.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+}
+.qrcode {
+    display: inline-block;
+    background-image: url(../images/qrcode.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 120px;
+    height: 120px;
+}
+.marginR {
+    margin-right: 10px !important;
+}
+@media \0screen\,screen\9 {
+    .leftNar,.footerNar {
+        position: static;
+        background-color: #000000;
+        filter:Alpha(opacity=30);
+        zoom:1;
+    }
+    .leftNarBtn,.footerNarBtn {
+        position: relative;
+    }
+
 }

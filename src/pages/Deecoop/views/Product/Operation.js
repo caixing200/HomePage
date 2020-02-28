@@ -41,9 +41,9 @@ export default class Operation extends Component {
                         <div className="row clearfix" style={{padding: '30px 0'}}>
                             <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                                     <div className={`product-details-content ${this.state.isShow?'product-details-animate':''}`}>
-                                        <h2 className="product-details-content-title">企业运营管理云平台</h2>
+                                        <h2 className="product-details-content-title">标准版SaaS企业管理系统</h2>
 
-                                        <h3 className="product-details-content-view-title" style={{visibility: 'hidden'}}>企业运营管理云平台</h3>
+                                        <h3 className="product-details-content-view-title" style={{visibility: 'hidden'}}>标准版SaaS企业管理系统</h3>
                                         <div className="clearfix product-details-content-view-detail">
                                             <div style={{float: 'left',width: '33.3%',padding: '2%'}}>
                                                 <div style={{textAlign: 'center'}}><img style={{display: 'inline-block'}} src={require('../../images/product_platform_management_01.png')} /></div>
