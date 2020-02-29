@@ -412,21 +412,20 @@
 }
 .leftNarBtn {
     height: 33.3%;
-    font-size: 25px;
+    font-size: 20px;
     color: #ffffff;
     position: relative;
     cursor: pointer;
 }
 .leftNarBtnTxt {
     padding-top: 20px;
-    display: table-cell;
     text-align: center;
     vertical-align: middle;
 }
 .leftNarBtnTxt div {
-    display: inline-block;
     margin: 0;
     vertical-align: middle;
+    text-align: center;
 }
 .leftNarBorder1 {
     position: absolute;
@@ -456,7 +455,7 @@
     display: inline-block;
     width: 33.3%;
     height: 100%;
-    font-size: 25px;
+    font-size: 20px;
     color: #ffffff;
     position: relative;
     text-align: center;
@@ -505,4 +504,25 @@
         position: relative;
     }
 
+}
+
+.inputRuleStrView {
+    position: relative;
+    /*overflow: hidden;*/
+}
+.inputRuleStrBox {
+    color: red;
+    font-size: 12px;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 15px;
+    padding-left: 27px;
+    padding-right: 27px;
+    opacity: 0;
+    transition: opacity .5s linear;
+}
+.inputRuleStrBoxShow {
+    opacity: 1;
 }

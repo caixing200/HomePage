@@ -14,8 +14,8 @@ export default class Register extends Component {
                 {
                     img: slide1,
                     txt1: '申请试用',
-                    txt2: 'ERP、MES、WMS定制',
-                    txt3: '',
+                    txt2: '智造云管家（标准版SaaS企业管理系统）',
+                    txt3: '包括：销售管理、采购管理、仓库管理、生产管理、看板管理等功能',
                 },
             ],
             isShow: false,
@@ -61,6 +61,7 @@ export default class Register extends Component {
             email: '',
             mobile: '',
 
+            codeChangeState: false,
             codeState: true,
             securityCodeState : true,
             nameState: true,
@@ -254,17 +255,30 @@ export default class Register extends Component {
             }
         )
     }
+    nameRule(e){
+        if(!e.target.value){
+            this.setState({
+                nameState: false,
+            })
+        }else {
+            this.setState({
+                nameState: true,
+            })
+        }
+    }
     codeChange(event){
         this.setState(
             {
-                code: event.target.value
+                code: event.target.value,
+                codeChangeState: true
             }
         )
     }
     codeRule(e){
         const that = this
         that.setState({
-            dialogTxt: ''
+            dialogTxt: '',
+            codeChangeState: false
         })
         if(this.state.code && this.state.code != this.state.ruledCode){
             $.post(
@@ -279,7 +293,7 @@ export default class Register extends Component {
                             ruledCode: that.state.code,
                             codeState: true
                         })
-                        $('#myModal').modal('toggle')
+                        // $('#myModal').modal('toggle')
                     }else {
                         that.setState({
                             codeState: false,
@@ -288,25 +302,61 @@ export default class Register extends Component {
                     }
                 }
             )
-        }
-        if (e.preventDefault){
-            e.preventDefault();
-        }else{
-            e.returnValue=false;
+        }else if(!this.state.code){
+            that.setState({
+                codeState: false,
+            })
         }
 
     }
     securityCodeChange(event){
         this.setState(
             {
-                securityCode: event.target.value
+                securityCode: event.target.value,
+                securityCodeState: event.target.value == this.state.tempSecurityCode
             }
         )
     }
+    securityCodeRule(event){
+        if(this.state.securityCode){
+            if(this.state.securityCode != this.state.tempSecurityCode){
+                this.setState({
+                    securityCodeState: false,
+                })
+            }else {
+                this.setState({
+                    securityCodeState: true,
+                })
+            }
+        }else {
+            this.setState({
+                securityCodeState: false,
+            })
+        }
+    }
     mobileChange(e){
         this.setState({
-            mobile: e.target.value
+            mobile: e.target.value,
+            mobileState: e.target.value?new RegExp(this.reg.mobile).test(e.target.value):false
         })
+    }
+    mobileRule(e){
+        if(this.state.mobile){
+            const text = new RegExp(this.reg.mobile)
+            if(!text.test(this.state.mobile)){
+                this.setState({
+                    mobileState: false,
+                })
+            }else {
+                this.setState({
+                    mobileState: true,
+                })
+            }
+        }else {
+            this.setState({
+                mobileState: false,
+            })
+        }
     }
 
     changeSecurityCode(e){
@@ -387,8 +437,27 @@ export default class Register extends Component {
 
     emailChange(e){
         this.setState({
-            email: e.target.value
+            email: e.target.value,
+            emailState: e.target.value?new RegExp(this.reg.email).test(e.target.value):false
         })
+    }
+    emailRule(e){
+        if(this.state.email){
+            const text = new RegExp(this.reg.email)
+            if(!text.test(this.state.email)){
+                this.setState({
+                    emailState: false,
+                })
+            }else {
+                this.setState({
+                    emailState: true,
+                })
+            }
+        }else {
+            this.setState({
+                emailState: false,
+            })
+        }
     }
 
     goSaas(){
@@ -466,51 +535,116 @@ export default class Register extends Component {
                                                     <div className="registerLeftEmpty hidden-xs"></div>
                                                     <div className="registerForm">
                                                         <form className="form-horizontal">
-                                                            <div className={`form-group ${this.state.nameState?'':'has-error'}`}>
+                                                            <div className={`form-group ${this.state.name?'has-success':this.state.nameState?'':'has-error'} has-feedback`}>
                                                                 <label className="col-sm-4 control-label registerFormTitle">企业名称</label>
-                                                                <div className="col-sm-8">
+                                                                <div className="col-sm-8 inputRuleStrView">
                                                                     <input type="text"
+                                                                           id="inputSuccess1"
+                                                                           aria-describedby="inputSuccess1Status"
                                                                            className="form-control"
                                                                            value={this.state.name}
                                                                            placeholder="请输入您的企业名称"
-                                                                           onChange={e=>this.nameChange(e)}/>
+                                                                           onChange={e=>this.nameChange(e)}
+                                                                           onBlur={e=>this.nameRule(e)}/>
+                                                                    {
+                                                                        this.state.name && <span className="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    {
+                                                                        !this.state.name && !this.state.nameState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    <span id="inputSuccess1Status" className="sr-only">(success)</span>
+                                                                    <div className={`inputRuleStrBox ${this.state.nameState?'':'inputRuleStrBoxShow'}`}>请输入企业名称</div>
                                                                 </div>
                                                             </div>
-                                                            <div className={`form-group ${this.state.codeState?'':'has-error'}`}>
+                                                            <div className={`form-group ${this.state.code?(this.state.codeState?'has-success':'has-error'):(this.state.codeState?'':'has-error')} has-feedback`}>
                                                                 <label className="col-sm-4 hidden-xs control-label registerFormTitle">企业简称</label>
                                                                 <label className="visible-xs col-xs-12 control-label">企业简称</label>
-                                                                <div className="col-sm-8">
+                                                                <div className="col-sm-8 inputRuleStrView">
                                                                     <input type="text"
+                                                                           id="inputSuccess2"
+                                                                           aria-describedby="inputSuccess2Status"
                                                                            className="form-control"
                                                                            placeholder="请输入英文作为登录账号"
                                                                            value={this.state.code}
                                                                            onChange={e=>this.codeChange(e)}
                                                                            onBlur={e=>this.codeRule(e)}/>
+                                                                    {
+                                                                        this.state.code && this.state.codeState && <span className="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    {
+                                                                        this.state.code && !this.state.codeState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    <span id="inputSuccess2Status" className="sr-only">(success)</span>
+                                                                    {
+                                                                        this.state.code && !this.state.codeState && !this.state.codeChangeState && <div className={`inputRuleStrBox ${this.state.codeState?'':'inputRuleStrBoxShow'}`}>该简称重复，不可使用</div>
+                                                                    }
+                                                                    {
+                                                                        !this.state.code && !this.state.codeState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>请输入企业简称</div>
+                                                                    }
+
                                                                 </div>
                                                             </div>
-                                                            <div className={`form-group ${this.state.mobileState?'':'has-error'}`}>
+                                                            <div className={`form-group ${this.state.mobile?(this.state.mobileState?'has-success':'has-error'):(this.state.mobileState?'':'has-error')} has-feedback`}>
                                                                 <label className="col-sm-4 control-label registerFormTitle">手机号</label>
-                                                                <div className="col-sm-8">
+                                                                <div className="col-sm-8 inputRuleStrView">
                                                                     <input type="text"
+                                                                           id="inputSuccess3"
+                                                                           aria-describedby="inputSuccess3Status"
                                                                            className="form-control"
                                                                            placeholder="手机号后6位为初始密码"
                                                                            value={this.state.mobile}
-                                                                           onChange={e=>this.mobileChange(e)}/>
+                                                                           onChange={e=>this.mobileChange(e)}
+                                                                           onBlur={e=>this.mobileRule(e)}/>
+                                                                    {
+                                                                        this.state.mobile && this.state.mobileState && <span className="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    {
+                                                                        this.state.mobile && !this.state.mobileState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    {
+                                                                        !this.state.mobile && !this.state.mobileState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    <span id="inputSuccess3Status" className="sr-only">(success)</span>
+                                                                    {
+                                                                        !this.state.mobile && !this.state.mobileState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>请输入手机号</div>
+                                                                    }
+                                                                    {
+                                                                        this.state.mobile && !this.state.mobileState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>手机号不正确</div>
+                                                                    }
                                                                 </div>
                                                             </div>
-                                                            <div className={`form-group ${this.state.securityCodeState?'':'has-error'}`}>
+                                                            <div className={`form-group ${this.state.securityCode?(this.state.securityCodeState?'has-success':'has-error'):(this.state.securityCodeState?'':'has-error')} has-feedback`}>
                                                                 <label className="col-sm-4 hidden-xs control-label registerFormTitle">验证码</label>
                                                                 <label className="visible-xs col-xs-12 control-label">验证码</label>
                                                                 <div className="col-sm-5 col-xs-7">
                                                                     <input type="text"
+                                                                           id="inputSuccess4"
+                                                                           aria-describedby="inputSuccess4Status"
                                                                            className="form-control"
-                                                                           value={this.state.securityCode }
+                                                                           value={this.state.securityCode}
                                                                            placeholder="请输入验证码"
-                                                                           onChange={e=>this.securityCodeChange(e)}/>
+                                                                           onChange={e=>this.securityCodeChange(e)}
+                                                                           onBlur={event => this.securityCodeRule(event)}/>
+                                                                    {
+                                                                        this.state.securityCode && this.state.securityCodeState && <span className="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    {
+                                                                        this.state.securityCode && !this.state.securityCodeState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    {
+                                                                        !this.state.securityCode && !this.state.securityCodeState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    <span id="inputSuccess4Status" className="sr-only">(success)</span>
+                                                                    {
+                                                                        !this.state.securityCode && !this.state.securityCodeState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>请输入验证码</div>
+                                                                    }
+                                                                    {
+                                                                        this.state.securityCode && !this.state.securityCodeState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>验证码不正确</div>
+                                                                    }
                                                                 </div>
                                                                 <div className="col-sm-3 col-xs-5">
                                                                     {this.state.hascanvas &&
-                                                                    <canvas className="form-control resetRegisterFormCanvas" id="canvas" width="83" height="32" onClick={event => this.changeSecurityCode(event)} title="点击更换验证码"></canvas>
+                                                                    <canvas className="resetRegisterFormCanvas" id="canvas" width="83" height="32" onClick={event => this.changeSecurityCode(event)} title="点击更换验证码"></canvas>
                                                                     }
                                                                     {!this.state.hascanvas &&
                                                                     <input type="text" className="form-control resetRegisterFormInput"
@@ -522,14 +656,33 @@ export default class Register extends Component {
                                                                     }
                                                                 </div>
                                                             </div>
-                                                            <div className={`form-group ${this.state.emailState?'':'has-error'}`}>
+                                                            <div className={`form-group ${this.state.email?(this.state.emailState?'has-success':'has-error'):(this.state.emailState?'':'has-error')} has-feedback`}>
                                                                 <label className="col-sm-4 control-label registerFormTitle">联系邮箱</label>
                                                                 <div className="col-sm-8">
                                                                     <input type="text"
+                                                                           id="inputSuccess5"
+                                                                           aria-describedby="inputSuccess5Status"
                                                                            className="form-control"
                                                                            placeholder="便于您接收账号信息"
                                                                            value={this.state.email}
-                                                                           onChange={event => this.emailChange(event)}/>
+                                                                           onChange={event => this.emailChange(event)}
+                                                                           onBlur={event => this.emailRule(event)}/>
+                                                                    {
+                                                                        this.state.email && this.state.emailState && <span className="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    {
+                                                                        this.state.email && !this.state.emailState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    {
+                                                                        !this.state.email && !this.state.emailState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                                                    }
+                                                                    <span id="inputSuccess5Status" className="sr-only">(success)</span>
+                                                                    {
+                                                                        !this.state.email && !this.state.emailState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>请输入邮箱</div>
+                                                                    }
+                                                                    {
+                                                                        this.state.email && !this.state.emailState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>邮箱不正确</div>
+                                                                    }
                                                                 </div>
                                                             </div>
                                                             <div className="form-group visible-xs visible-sm">

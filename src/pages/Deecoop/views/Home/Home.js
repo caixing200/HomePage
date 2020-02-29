@@ -52,6 +52,7 @@ class Home extends Component {
             ]
         };
         this.qrcodeHtml = `<div class="qrcode"></div>`
+        this.phoneNum = `<div style="color:#000000;font-size: 22px;">189-8979-2655</div>`
     }
 
     navbar(index) {
@@ -201,11 +202,12 @@ class Home extends Component {
                             </div>
                         </div>
                         <div className="leftNarBtn"
+                             data-html="true"
                              data-trigger="hover"
                              data-container="body"
                              data-toggle="popover"
                              data-placement="left"
-                             data-content="189-8979-2655">
+                             data-content={this.phoneNum}>
                             <div className="leftNarBtnTxt">
                                 <div>咨询</div>
                                 <div>电话</div>
