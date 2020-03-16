@@ -56,7 +56,7 @@ const ENV_LIST = [
     //顶智
     envName: 'deecoop',
     projectName: '顶智智能技术有限公司',
-    baseUrl: 'https://web.ouhaicloud.com/',
+    baseUrl: 'https://web.deecoop.cn/',
     assetsPublicPath:'/',
     title: '顶智智能-ERP-MES-WMS-数字化工厂',
     favicon: '/static/favicon.ico',

@@ -79,7 +79,7 @@ export default class Register extends Component {
             hascanvas: true,
         }
         this._anTimer = ''
-        this.base_url = 'https://web.ouhaicloud.com/'
+        this.base_url = 'https://web.deecoop.cn/'
         this.reg = {
             code: `^[A-Za-z0-9]$`,
             number: `\\d$`,
@@ -218,6 +218,14 @@ export default class Register extends Component {
             return;
         }
 
+        // that.setState({
+        //     dialogTxt: '正在创建账户...'
+        // })
+        // $('#myModal').modal('show')
+        if($('.preloader').length){
+            $('.preloader').show()
+        }
+
         $.post(
             `${this.base_url}system/companyApplication`,
             {
@@ -234,15 +242,23 @@ export default class Register extends Component {
             function (res) {
                 if(res.code === 0){
                     clearInterval(that.secondTimer)
-                    that.setState({
-                        pageState: that.state.companyUserCount == 1?1:2
-                    })
+                    setTimeout(function () {
+                        if($('.preloader').length){
+                            $('.preloader').hide()
+                        }
+                        that.setState({
+                            pageState: that.state.companyUserCount == 1?1:2
+                        })
+                    },2000)
                 }else {
+                    if($('.preloader').length){
+                        $('.preloader').hide()
+                    }
                     that.changeSecurityCode()
                     that.setState({
                         dialogTxt: res.msg
                     })
-                    $('#myModal').modal('toggle')
+                    $('#myModal').modal('show')
                 }
             }
         )
@@ -276,10 +292,26 @@ export default class Register extends Component {
     }
     codeRule(e){
         const that = this
-        that.setState({
-            dialogTxt: '',
-            codeChangeState: false
-        })
+        const tempStr = e.target.value
+        if(tempStr){
+            const text = new RegExp(this.reg.en)
+            if(!text.test(tempStr)){
+                this.setState({
+                    codeState: false,
+                })
+                return;
+            }else {
+                this.setState({
+                    codeState: true,
+                    codeChangeState: false
+                })
+            }
+        }else {
+            this.setState({
+                codeState: false,
+            })
+            return;
+        }
         if(this.state.code && this.state.code != this.state.ruledCode){
             $.post(
                 `${this.base_url}system/checkExistCompanyCode`,
@@ -289,7 +321,6 @@ export default class Register extends Component {
                 function (res) {
                     if(res.code === 0){
                         that.setState({
-                            dialogTxt: '此账号无重复，可以使用',
                             ruledCode: that.state.code,
                             codeState: true
                         })
@@ -488,13 +519,13 @@ export default class Register extends Component {
                                                     <div className="registerView">
                                                         <div>
                                                             <div className="col-xs-12 col-sm-3 reset-col">
-                                                                <span className="registerTitle">套餐</span><span>：</span>
+                                                                <span className="registerTitle">功能</span><span>：</span>
                                                             </div>
-                                                            <div className="col-xs-12 col-sm-9 reset-col">
-                                                                <button type="button" className={`btn btn-default ${this.state.roles[0]==='a'?'active':''}`} disabled="disabled" onClick={_ => this.selectRole('a')}>销售</button>
-                                                                <button type="button" className={`btn btn-default ${this.state.roles[1]==='b'?'active':''}`} disabled="disabled" style={{marginLeft:'2%'}} onClick={_ => this.selectRole('b')}>采购</button>
-                                                                <button type="button" className={`btn btn-default ${this.state.roles[2]==='c'?'active':''}`} disabled="disabled" style={{marginLeft:'2%'}} onClick={_ => this.selectRole('c')}>仓库</button>
-                                                                <button type="button" className={`btn btn-default ${this.state.roles[3]==='d'?'active':''}`} disabled="disabled" style={{marginLeft:'2%'}} onClick={_ => this.selectRole('d')}>生产计划</button>
+                                                            <div className="col-xs-12 col-sm-9 reset-col">销售、采购、仓库、生产等模块
+                                                                {/*<button type="button" className={`btn btn-default ${this.state.roles[0]==='a'?'active':''}`} disabled="disabled" onClick={_ => this.selectRole('a')}>销售</button>*/}
+                                                                {/*<button type="button" className={`btn btn-default ${this.state.roles[1]==='b'?'active':''}`} disabled="disabled" style={{marginLeft:'2%'}} onClick={_ => this.selectRole('b')}>采购</button>*/}
+                                                                {/*<button type="button" className={`btn btn-default ${this.state.roles[2]==='c'?'active':''}`} disabled="disabled" style={{marginLeft:'2%'}} onClick={_ => this.selectRole('c')}>仓库</button>*/}
+                                                                {/*<button type="button" className={`btn btn-default ${this.state.roles[3]==='d'?'active':''}`} disabled="disabled" style={{marginLeft:'2%'}} onClick={_ => this.selectRole('d')}>生产计划</button>*/}
                                                             </div>
                                                         </div>
                                                         <div style={{paddingTop:'60px'}}>
@@ -577,6 +608,9 @@ export default class Register extends Component {
                                                                     <span id="inputSuccess2Status" className="sr-only">(success)</span>
                                                                     {
                                                                         this.state.code && !this.state.codeState && !this.state.codeChangeState && <div className={`inputRuleStrBox ${this.state.codeState?'':'inputRuleStrBoxShow'}`}>该简称重复，不可使用</div>
+                                                                    }
+                                                                    {
+                                                                        this.state.code && !this.state.codeState && this.state.codeChangeState && <div className={`inputRuleStrBox ${this.state.codeState?'':'inputRuleStrBoxShow'}`}>仅可输入英文简称</div>
                                                                     }
                                                                     {
                                                                         !this.state.code && !this.state.codeState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>请输入企业简称</div>
@@ -757,8 +791,8 @@ export default class Register extends Component {
                                                     <div className="col-sm-2 hidden-xs"></div>
                                                     <div className="col-sm-9 col-xs-12 reset-buy-view">
                                                         <p>订购套餐：销售、采购、仓库、生产计划</p>
-                                                        <p>订购时间：{this.state.year}年</p>
-                                                        <p>套餐用户：{this.state.companyUserCount}</p>
+                                                        <p>订购时间：{this.state.year>3?'永久':`${this.state.year}年`}</p>
+                                                        <p>套餐用户：{this.state.companyUserCount>50?'无限制':this.state.companyUserCount}</p>
                                                         <p>账号：{this.state.code}admin</p>
                                                         <p>初始密码：手机号后6位</p>
                                                     </div>
@@ -815,9 +849,9 @@ export default class Register extends Component {
                             <div className="modal-body">
                                 {this.state.dialogTxt}
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-default" data-dismiss="modal">关闭</button>
-                            </div>
+                            {/*<div className="modal-footer">*/}
+                            {/*    <button type="button" className="btn btn-default" data-dismiss="modal">关闭</button>*/}
+                            {/*</div>*/}
                         </div>
                     </div>
                 </div>
