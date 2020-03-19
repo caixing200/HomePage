@@ -25,7 +25,7 @@ export default class Register extends Component {
             cost: '试用',
             costObj: {
                 '1':{
-                    '1': '试用'
+                    '1': '免费试用'
                 },
                 '5':{
                     '1': '￥3999',
@@ -94,6 +94,7 @@ export default class Register extends Component {
             int: `^-?\\d+$`,
         }
         this.secondTimer = ''
+        this.userKey = ''
     }
 
     componentDidMount() {
@@ -146,24 +147,24 @@ export default class Register extends Component {
             })
             return;
         }
-        if(this.state.code){
-            const text = new RegExp(this.reg.en)
-            if(!text.test(this.state.code)){
-                this.setState({
-                    codeState: false,
-                })
-                return
-            }else {
-                this.setState({
-                    codeState: true,
-                })
-            }
-        }else {
-            this.setState({
-                codeState: false,
-            })
-            return;
-        }
+        // if(this.state.code){
+        //     const text = new RegExp(this.reg.en)
+        //     if(!text.test(this.state.code)){
+        //         this.setState({
+        //             codeState: false,
+        //         })
+        //         return
+        //     }else {
+        //         this.setState({
+        //             codeState: true,
+        //         })
+        //     }
+        // }else {
+        //     this.setState({
+        //         codeState: false,
+        //     })
+        //     return;
+        // }
         if(this.state.mobile){
             const text = new RegExp(this.reg.mobile)
             if(!text.test(this.state.mobile)){
@@ -225,19 +226,15 @@ export default class Register extends Component {
         if($('.preloader').length){
             $('.preloader').show()
         }
-
+        this.userKey = ''
         $.post(
-            `${this.base_url}system/companyApplication`,
+            `${this.base_url}system/companyTryApplication`,
             {
                 name: this.state.name,
-                code: this.state.code,
                 mobile: this.state.mobile,
                 securityCode: this.state.securityCode,
                 securityCodeKey: this.state.securityCodeKey,
                 email: this.state.email,
-                roleKey: 'a,b,c,d',
-                companyUserCount: this.state.companyUserCount,
-                year: this.state.year,
             },
             function (res) {
                 if(res.code === 0){
@@ -246,6 +243,7 @@ export default class Register extends Component {
                         if($('.preloader').length){
                             $('.preloader').hide()
                         }
+                        that.userKey = res.result.userKey
                         that.setState({
                             pageState: that.state.companyUserCount == 1?1:2
                         })
@@ -492,7 +490,8 @@ export default class Register extends Component {
     }
 
     goSaas(){
-        window.open(this.base_url)
+        window.open(`${this.base_url}?userKey=${this.userKey}`)
+        // window.open(`http://localhost:9528/?userKey=${this.userKey}`)
     }
 
     canvasSupport() {
@@ -533,24 +532,24 @@ export default class Register extends Component {
                                                                 <span className="registerTitle">用户数</span><span>：</span>
                                                             </div>
                                                             <div className="col-xs-12 col-sm-9 reset-col">
-                                                                <button type="button" style={{width:'54px'}} className={`btn btn-default ${this.state.companyUserCount===1?'active':''}`} onClick={_ => this.selectCount(1)}>1</button>
-                                                                <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.companyUserCount===5?'active':''}`}  onClick={_ => this.selectCount(5)}>5</button>
-                                                                <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.companyUserCount===10?'active':''}`}  onClick={_ => this.selectCount(10)}>10</button>
-                                                                <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.companyUserCount===50?'active':''}`}  onClick={_ => this.selectCount(50)}>50</button>
-                                                                <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.companyUserCount>50?'active':''}`}  onClick={_ => this.selectCount(9999)}>&gt;50</button>
+                                                                <button type="button" style={{width:'54px'}} disabled="disabled" className={`btn btn-default ${this.state.companyUserCount===1?'active':''}`} onClick={_ => this.selectCount(1)}>1</button>
+                                                                {/*<button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.companyUserCount===5?'active':''}`}  onClick={_ => this.selectCount(5)}>5</button>*/}
+                                                                {/*<button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.companyUserCount===10?'active':''}`}  onClick={_ => this.selectCount(10)}>10</button>*/}
+                                                                {/*<button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.companyUserCount===50?'active':''}`}  onClick={_ => this.selectCount(50)}>50</button>*/}
+                                                                {/*<button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.companyUserCount>50?'active':''}`}  onClick={_ => this.selectCount(9999)}>&gt;50</button>*/}
                                                             </div>
                                                         </div>
-                                                        <div style={{paddingTop:'60px'}}>
-                                                            <div className="col-xs-12 col-sm-3 reset-col">
-                                                                <span className="registerTitle">时间</span><span>：</span>
-                                                            </div>
-                                                            <div className="col-xs-12 col-sm-9 reset-col">
-                                                                <button type="button" style={{width:'54px'}} className={`btn btn-default ${this.state.year===1?'active':''}`} disabled={`${this.state.companyUserCount===1?'disabled':''}`} onClick={_ => this.selectYear(1)}>1年</button>
-                                                                <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.year===2?'active':''}`} disabled={`${this.state.companyUserCount===1?'disabled':''}`} onClick={_ => this.selectYear(2)}>2年</button>
-                                                                <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.year===3?'active':''}`} disabled={`${this.state.companyUserCount===1?'disabled':''}`} onClick={_ => this.selectYear(3)}>3年</button>
-                                                                <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.year>3?'active':''}`} disabled={`${this.state.companyUserCount===1?'disabled':''}`} onClick={_ => this.selectYear(9999)}>无限</button>
-                                                            </div>
-                                                        </div>
+                                                        {/*<div style={{paddingTop:'60px'}}>*/}
+                                                        {/*    <div className="col-xs-12 col-sm-3 reset-col">*/}
+                                                        {/*        <span className="registerTitle">时间</span><span>：</span>*/}
+                                                        {/*    </div>*/}
+                                                        {/*    <div className="col-xs-12 col-sm-9 reset-col">*/}
+                                                        {/*        <button type="button" style={{width:'54px'}} className={`btn btn-default ${this.state.year===1?'active':''}`} disabled={`${this.state.companyUserCount===1?'disabled':''}`} onClick={_ => this.selectYear(1)}>1年</button>*/}
+                                                        {/*        <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.year===2?'active':''}`} disabled={`${this.state.companyUserCount===1?'disabled':''}`} onClick={_ => this.selectYear(2)}>2年</button>*/}
+                                                        {/*        <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.year===3?'active':''}`} disabled={`${this.state.companyUserCount===1?'disabled':''}`} onClick={_ => this.selectYear(3)}>3年</button>*/}
+                                                        {/*        <button type="button" style={{width:'54px',marginLeft:'2%'}} className={`btn btn-default ${this.state.year>3?'active':''}`} disabled={`${this.state.companyUserCount===1?'disabled':''}`} onClick={_ => this.selectYear(9999)}>无限</button>*/}
+                                                        {/*    </div>*/}
+                                                        {/*</div>*/}
                                                         <div style={{paddingTop:'60px'}}>
                                                             <div className="col-xs-12 col-sm-3 reset-col">
                                                                 <span className="registerTitle">费用</span><span>：</span>
@@ -587,37 +586,37 @@ export default class Register extends Component {
                                                                     <div className={`inputRuleStrBox ${this.state.nameState?'':'inputRuleStrBoxShow'}`}>请输入企业名称</div>
                                                                 </div>
                                                             </div>
-                                                            <div className={`form-group ${this.state.code?(this.state.codeState?'has-success':'has-error'):(this.state.codeState?'':'has-error')} has-feedback`}>
-                                                                <label className="col-sm-4 hidden-xs control-label registerFormTitle">企业简称</label>
-                                                                <label className="visible-xs col-xs-12 control-label">企业简称</label>
-                                                                <div className="col-sm-8 inputRuleStrView">
-                                                                    <input type="text"
-                                                                           id="inputSuccess2"
-                                                                           aria-describedby="inputSuccess2Status"
-                                                                           className="form-control"
-                                                                           placeholder="请输入英文作为登录账号"
-                                                                           value={this.state.code}
-                                                                           onChange={e=>this.codeChange(e)}
-                                                                           onBlur={e=>this.codeRule(e)}/>
-                                                                    {
-                                                                        this.state.code && this.state.codeState && <span className="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                                                                    }
-                                                                    {
-                                                                        this.state.code && !this.state.codeState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                                                                    }
-                                                                    <span id="inputSuccess2Status" className="sr-only">(success)</span>
-                                                                    {
-                                                                        this.state.code && !this.state.codeState && !this.state.codeChangeState && <div className={`inputRuleStrBox ${this.state.codeState?'':'inputRuleStrBoxShow'}`}>该简称重复，不可使用</div>
-                                                                    }
-                                                                    {
-                                                                        this.state.code && !this.state.codeState && this.state.codeChangeState && <div className={`inputRuleStrBox ${this.state.codeState?'':'inputRuleStrBoxShow'}`}>仅可输入英文简称</div>
-                                                                    }
-                                                                    {
-                                                                        !this.state.code && !this.state.codeState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>请输入企业简称</div>
-                                                                    }
+                                                            {/*<div className={`form-group ${this.state.code?(this.state.codeState?'has-success':'has-error'):(this.state.codeState?'':'has-error')} has-feedback`}>*/}
+                                                            {/*    <label className="col-sm-4 hidden-xs control-label registerFormTitle">企业简称</label>*/}
+                                                            {/*    <label className="visible-xs col-xs-12 control-label">企业简称</label>*/}
+                                                            {/*    <div className="col-sm-8 inputRuleStrView">*/}
+                                                            {/*        <input type="text"*/}
+                                                            {/*               id="inputSuccess2"*/}
+                                                            {/*               aria-describedby="inputSuccess2Status"*/}
+                                                            {/*               className="form-control"*/}
+                                                            {/*               placeholder="请输入英文作为登录账号"*/}
+                                                            {/*               value={this.state.code}*/}
+                                                            {/*               onChange={e=>this.codeChange(e)}*/}
+                                                            {/*               onBlur={e=>this.codeRule(e)}/>*/}
+                                                            {/*        {*/}
+                                                            {/*            this.state.code && this.state.codeState && <span className="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>*/}
+                                                            {/*        }*/}
+                                                            {/*        {*/}
+                                                            {/*            this.state.code && !this.state.codeState && <span className="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>*/}
+                                                            {/*        }*/}
+                                                            {/*        <span id="inputSuccess2Status" className="sr-only">(success)</span>*/}
+                                                            {/*        {*/}
+                                                            {/*            this.state.code && !this.state.codeState && !this.state.codeChangeState && <div className={`inputRuleStrBox ${this.state.codeState?'':'inputRuleStrBoxShow'}`}>该简称重复，不可使用</div>*/}
+                                                            {/*        }*/}
+                                                            {/*        {*/}
+                                                            {/*            this.state.code && !this.state.codeState && this.state.codeChangeState && <div className={`inputRuleStrBox ${this.state.codeState?'':'inputRuleStrBoxShow'}`}>仅可输入英文简称</div>*/}
+                                                            {/*        }*/}
+                                                            {/*        {*/}
+                                                            {/*            !this.state.code && !this.state.codeState && <div className={`inputRuleStrBox inputRuleStrBoxShow`}>请输入企业简称</div>*/}
+                                                            {/*        }*/}
 
-                                                                </div>
-                                                            </div>
+                                                            {/*    </div>*/}
+                                                            {/*</div>*/}
                                                             <div className={`form-group ${this.state.mobile?(this.state.mobileState?'has-success':'has-error'):(this.state.mobileState?'':'has-error')} has-feedback`}>
                                                                 <label className="col-sm-4 control-label registerFormTitle">手机号</label>
                                                                 <div className="col-sm-8 inputRuleStrView">
@@ -625,7 +624,7 @@ export default class Register extends Component {
                                                                            id="inputSuccess3"
                                                                            aria-describedby="inputSuccess3Status"
                                                                            className="form-control"
-                                                                           placeholder="手机号后6位为初始密码"
+                                                                           placeholder="请准确填写以便我们提供服务"
                                                                            value={this.state.mobile}
                                                                            onChange={e=>this.mobileChange(e)}
                                                                            onBlur={e=>this.mobileRule(e)}/>
@@ -849,9 +848,9 @@ export default class Register extends Component {
                             <div className="modal-body">
                                 {this.state.dialogTxt}
                             </div>
-                            {/*<div className="modal-footer">*/}
-                            {/*    <button type="button" className="btn btn-default" data-dismiss="modal">关闭</button>*/}
-                            {/*</div>*/}
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-default" data-dismiss="modal">关闭</button>
+                            </div>
                         </div>
                     </div>
                 </div>
