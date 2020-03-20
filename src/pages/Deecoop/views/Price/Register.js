@@ -5,6 +5,7 @@ import Banner from '@/components/Banner/Sbanner'
 
 
 import slide1 from '../../images/service_04.jpg'
+import qrcode from '../../images/qrcode.png'
 
 export default class Register extends Component {
     constructor(props) {
@@ -95,6 +96,7 @@ export default class Register extends Component {
         }
         this.secondTimer = ''
         this.userKey = ''
+        this.qrcode = qrcode
     }
 
     componentDidMount() {
@@ -245,7 +247,8 @@ export default class Register extends Component {
                         }
                         that.userKey = res.result.userKey
                         that.setState({
-                            pageState: that.state.companyUserCount == 1?1:2
+                            pageState: that.state.companyUserCount == 1?1:2,
+                            code: res.result.userCode
                         })
                     },2000)
                 }else {
@@ -490,6 +493,7 @@ export default class Register extends Component {
     }
 
     goSaas(){
+
         window.open(`${this.base_url}?userKey=${this.userKey}`)
         // window.open(`http://localhost:9528/?userKey=${this.userKey}`)
     }
@@ -757,15 +761,24 @@ export default class Register extends Component {
 
                                             <div className="result-view">
                                                 <div style={{display: 'inline-block',textAlign:'left'}}>
-                                                    <p>试用账号：{`${this.state.code}admin`}</p>
-                                                    <p>初始密码：手机号后6位</p>
-                                                    <p style={{visibility: 'hidden'}}>1</p>
-                                                    <p>详细信息已发送至邮箱，请注意查收。</p>
+                                                    <p>企业名称：{this.state.name}</p>
+                                                    <p>注册手机号：{this.state.mobile}</p>
+                                                    <p>企业管理员登录账号：{this.state.code}</p>
+                                                    <p>初始密码：注册手机号后6位</p>
+                                                    <div className="register-result-btn">
+                                                        <span style={{marginRight:'20px'}}>系统登录网址：web.deecoop.cn</span>
+                                                        <button type="button" className="btn btn-warning btn-sm" onClick={event => this.goSaas(event)}>进入登录页面</button>
+                                                    </div>
+                                                    <p style={{visibility: 'hidden',fontSize:'12px'}}>1</p>
+                                                    <p>详细信息已发送至您登记的邮箱：{this.state.email}，请注意查收。</p>
+                                                    <p style={{visibility: 'hidden',fontSize:'12px'}}>1</p>
+                                                    <p>如有任何问题，欢迎随时咨询：189-8979-2655</p>
+                                                    <p>或扫描下方二维码添加微信</p>
+                                                    <div>
+                                                        <img src={this.qrcode}  style={{width:'180px',height:'180px'}}/>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="register-result-btn">
-                                            <button type="button" className="btn btn-warning btn-lg" onClick={event => this.goSaas(event)}>进入登录页面</button>
                                         </div>
                                     </div>
                                 }
